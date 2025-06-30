@@ -13,7 +13,7 @@
     //other configs
     "noEmit": false,
     "rootDir": ".",
-    "outDir": ".aws-sam/build/Mysql2/nodejs", // "../../.aws-sam/build/YourLayer/nodejs"
+    "outDir": "../aws-sam/build/Mysql2/nodejs", // "../../.aws-sam/build/YourLayer/nodejs"
     "module": "commonjs"
     // more configs
     
