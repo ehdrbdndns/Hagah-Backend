@@ -1,0 +1,40 @@
+Transform: AWS::Serverless-2016-10-31
+Description: |
+  hagah-backend
+  Sample SAM Template for hagah-backend
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  hagahJwt:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ./layer/jwt
+      CompatibleArchitectures:
+        - arm64
+      CompatibleRuntimes:
+        - nodejs22.x
+    Metadata:
+      BuildMethod: nodejs22.x
+      BuildArchitecture: arm64
+  hagahMysql:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ./layer/mysql2
+      CompatibleArchitectures:
+        - arm64
+      CompatibleRuntimes:
+        - nodejs22.x
+    Metadata:
+      BuildMethod: nodejs22.x
+      BuildArchitecture: arm64
+Metadata:
+  AWS::Composer::Groups:
+    Group:
+      Label: layer
+      Members:
+        - hagahJwt
+        - hagahMysql
