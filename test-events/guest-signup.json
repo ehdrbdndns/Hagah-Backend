@@ -1,0 +1,8 @@
+{
+  "httpMethod": "POST",
+  "path": "/auth/signup",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"provider\": \"guest\", \"email\": \"test@example.com\", \"name\": \"Test User\"}"
+}

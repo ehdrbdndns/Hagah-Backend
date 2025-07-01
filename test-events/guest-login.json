@@ -1,0 +1,8 @@
+{
+  "httpMethod": "POST",
+  "path": "/auth/login",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"provider\": \"guest\", \"guest_user_id\": \"test_guest_id_123\"}"
+}

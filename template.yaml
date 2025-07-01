@@ -31,6 +31,48 @@ Resources:
     Metadata:
       BuildMethod: nodejs22.x
       BuildArchitecture: arm64
+  
+  AuthSignupFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./function/auth-signup
+      Handler: index.lambdaHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - arm64
+      Layers:
+        - !Ref hagahJwt
+        - !Ref hagahMysql
+      Events:
+        AuthSignup:
+          Type: Api
+          Properties:
+            Path: /auth/signup
+            Method: post
+      Environment:
+        Variables:
+          NODE_ENV: production
+
+  AuthLoginFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./function/auth-login
+      Handler: index.lambdaHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - arm64
+      Layers:
+        - !Ref hagahJwt
+        - !Ref hagahMysql
+      Events:
+        AuthLogin:
+          Type: Api
+          Properties:
+            Path: /auth/login
+            Method: post
+      Environment:
+        Variables:
+          NODE_ENV: production
 Metadata:
   AWS::Composer::Groups:
     Group:
@@ -38,3 +80,8 @@ Metadata:
       Members:
         - hagahJwt
         - hagahMysql
+    FunctionGroup:
+      Label: functions
+      Members:
+        - AuthSignupFunction
+        - AuthLoginFunction

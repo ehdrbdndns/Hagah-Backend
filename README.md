@@ -1,4 +1,119 @@
-# Repository Quick Start template
+# Hagah Backend
+
+A serverless backend for the Hagah application providing authentication services with support for Kakao, Apple, and Guest login methods.
+
+## Features
+
+- **Multi-provider Authentication**: Supports Kakao OAuth, Apple Sign In, and Guest authentication
+- **Serverless Architecture**: Built with AWS Lambda and SAM framework
+- **JWT Token Management**: Secure token generation and validation
+- **MySQL Database**: User data storage with proper indexing
+- **RESTful API**: Clean API endpoints for signup and login
+
+## API Endpoints
+
+- `POST /auth/signup` - User registration
+- `POST /auth/login` - User authentication
+
+## Authentication Providers
+
+### Kakao OAuth
+- Validates access tokens against Kakao API
+- Retrieves user profile information (ID, email, name, profile image)
+
+### Apple Sign In  
+- Validates Apple ID tokens
+- Extracts user information from JWT payload
+- Basic token structure and expiration validation
+
+### Guest Users
+- Generates unique anonymous user IDs
+- Optional email and name collection
+- No external validation required
+
+## Quick Start
+
+### Prerequisites
+- AWS CLI configured
+- SAM CLI installed
+- Node.js 22.x
+- MySQL database
+
+### Environment Variables
+Configure the following environment variables:
+
+```bash
+# Database
+DB_HOST=your-mysql-host
+DB_USER=your-mysql-username  
+DB_PASSWORD=your-mysql-password
+DB_DATABASE=your-database-name
+
+# JWT
+JWT_SECRET_KEY=your-secret-key
+```
+
+### Database Setup
+1. Create a MySQL database
+2. Run the schema from `database/schema.sql`:
+
+```sql
+mysql -u username -p database_name < database/schema.sql
+```
+
+### Deployment
+
+```bash
+# Build the application
+sam build
+
+# Deploy with guided configuration
+sam deploy --guided
+
+# Or deploy with existing configuration
+sam deploy
+```
+
+### Local Development
+
+```bash
+# Start local API Gateway
+sam local start-api
+
+# Test a function locally
+sam local invoke AuthSignupFunction --event test-events/guest-signup.json
+```
+
+## Project Structure
+
+```
+├── function/
+│   ├── auth-signup/     # Signup Lambda function
+│   └── auth-login/      # Login Lambda function
+├── layer/
+│   ├── jwt/            # JWT utilities layer
+│   └── mysql2/         # Database utilities layer
+├── database/
+│   └── schema.sql      # Database schema
+├── docs/
+│   └── authentication.md  # API documentation
+└── template.yaml       # SAM template
+```
+
+## API Documentation
+
+Detailed API documentation is available in [docs/authentication.md](docs/authentication.md).
+
+## Security Notes
+
+- Apple ID token validation uses basic JWT decoding. Implement full signature verification for production use.
+- JWT tokens expire in 1 hour by default
+- Database uses unique constraints to prevent duplicate users
+- All API responses include proper CORS headers
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
 ## Index
   - [Overview](#overview) 
   - [Getting Started](#getting-started)
